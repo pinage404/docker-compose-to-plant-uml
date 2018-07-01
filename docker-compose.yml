@@ -1,0 +1,26 @@
+version: "3.3"
+
+services:
+    docker-compose-to-plant-uml:
+        build: .
+        image: docker-compose-to-plant-uml
+        volumes:
+            - .:/input
+            - /tmp:/output
+        # don't know how to redirect the output without overriding entrypoint
+        entrypoint: sh -c "java -Dpackage=your_package -Dfile=/input/docker-compose.yml -jar ./dockerToPlant.jar > /output/diagram.plantuml"
+
+    plantuml:
+        image: plantuml/plantuml-server:jetty
+        expose:
+            - 8080
+
+    generator:
+        image: alpine:3.7
+        depends_on:
+            - plantuml
+            - docker-compose-to-plant-uml
+        volumes:
+            - /tmp:/input
+            - /tmp:/output
+        entrypoint: sh -c "apk add --no-cache curl && curl --form 'uml=@/input/diagram.plantuml' http://plantuml:8080/svg/ > /output/diagram.svg"
