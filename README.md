@@ -49,3 +49,16 @@ ls /path/to/your/directory
 # docker-compose.yml
 docker run --volume /path/to/your/directory:/input maxime-bus/docker-compose-to-plant-uml
 ```
+
+## Self Demo
+
+```sh
+# generate diagram
+docker-compose up -d generator
+# stop plantuml server and remove all containes
+docker-compose down
+# print generated PlantUML
+cat /tmp/diagram.plantuml
+# display generated image in your browser
+eval $BROWSER /tmp/diagram.svg
+```
