@@ -11,10 +11,13 @@ RUN mvn clean compile assembly:single
 
 FROM openjdk:8-jdk-slim
 
+# @FIXME: it seems to not work
+ENV PACKAGE Application
+
 VOLUME [ "/input" ]
 ENV DOCKER_COMPOSE_FILE_PATH "/input/docker-compose.yml"
 
 WORKDIR /app
 COPY --from=build /app/target/dockerToPlant.jar .
 
-ENTRYPOINT java -Dpackage=your_package -Dfile=${DOCKER_COMPOSE_FILE_PATH} -jar ./dockerToPlant.jar
+ENTRYPOINT java -Dpackage=${PACKAGE} -Dfile=${DOCKER_COMPOSE_FILE_PATH} -jar ./dockerToPlant.jar
