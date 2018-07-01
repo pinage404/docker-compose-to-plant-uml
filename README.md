@@ -41,3 +41,11 @@ mvn clean compile assembly:single
 # Write it as is when you are at the root of the project directory
 java -Dpackage=<your_package> -Dfile="path/to/docker-compose.yaml" -jar target/dockerToPlant.jar
 ```
+
+## Using Docker
+
+```sh
+ls /path/to/your/directory
+# docker-compose.yml
+docker run --volume /path/to/your/directory:/input maxime-bus/docker-compose-to-plant-uml
+```
