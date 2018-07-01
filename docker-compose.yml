@@ -7,6 +7,8 @@ services:
         volumes:
             - .:/input
             - /tmp:/output
+        environment:
+            PACKAGE: Docker-Compose to PlantUML
         # don't know how to redirect the output without overriding entrypoint
         entrypoint: sh -c "java -Dpackage=your_package -Dfile=/input/docker-compose.yml -jar ./dockerToPlant.jar > /output/diagram.plantuml"
 
